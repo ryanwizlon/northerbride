@@ -1,0 +1,33 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artwork</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    {% extends "base.html" %}
+    {% block content %}
+    <div id="artwork-item">
+        <h2>{{ artwork.title }}</h2>
+        <img src="{{ artwork.image_url }}" alt="{{ artwork.title }}">
+        <p>{{ artwork.description }}</p>
+        <div id="comment-section">
+            {% for comment in comments %}
+                <div class="comment-box">
+                    <p>{{ comment.user.username }}: {{ comment.text }}</p>
+                </div>
+            {% endfor %}
+            <form action="{{ url_for('comment') }}" method="post">
+                <input type="text" name="comment" placeholder="Add a comment...">
+                <input type="submit" value="Post">
+            </form>
+        </div>
+        <button id="share-button" onclick="shareArtwork({{ artwork.id }})">Share</button>
+    </div>
+    {% endblock %}
+</body>
+</html>
+```
