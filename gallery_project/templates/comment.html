@@ -1,0 +1,20 @@
+```html
+{% extends "base.html" %}
+
+{% block content %}
+<div id="comment-section">
+    <h2>Comments</h2>
+    {% for comment in comments %}
+    <div class="comment-box">
+        <p><strong>{{ comment.user.username }}</strong> said:</p>
+        <p>{{ comment.text }}</p>
+    </div>
+    {% endfor %}
+    <form action="{{ url_for('comment.postComment') }}" method="post">
+        <textarea name="comment" placeholder="Write your comment here..."></textarea>
+        <input type="hidden" name="artwork_id" value="{{ artwork.id }}">
+        <button type="submit">Post Comment</button>
+    </form>
+</div>
+{% endblock %}
+```

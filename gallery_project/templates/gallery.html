@@ -1,0 +1,41 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artwork Gallery</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <div id="gallery-container">
+        {% for community in communities %}
+            <h2>{{ community.name }}</h2>
+            <div class="gallery-item">
+                {% for artwork in community.artworks %}
+                    <div id="artwork-item">
+                        <img src="{{ artwork.image_url }}" alt="{{ artwork.title }}">
+                        <h3>{{ artwork.title }}</h3>
+                        <p>{{ artwork.description }}</p>
+                        <button id="share-button" onclick="shareArtwork('{{ artwork.id }}')">Share</button>
+                        <div id="comment-section">
+                            {% for comment in artwork.comments %}
+                                <p>{{ comment.user.username }}: {{ comment.text }}</p>
+                            {% endfor %}
+                            <form action="{{ url_for('comment', artwork_id=artwork.id) }}" method="post">
+                                <input type="text" name="comment" placeholder="Add a comment...">
+                                <input type="submit" value="Post">
+                            </form>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/gallery.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/comment.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/share.js') }}"></script>
+</body>
+</html>
+```
